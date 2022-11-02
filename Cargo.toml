@@ -1,0 +1,37 @@
+[package]
+name = "extension-eyre"
+version = "0.1.0"
+authors = ["PoOnesNerfect <jack.y.l.dev@gmail.com>"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+description = "Re-export of color-eyre that introduces Extensions (type-map) to eyre::Report"
+repository = "https://github.com/PoOnesNerfect/extension-eyre"
+documentation = "https://docs.rs/extension-eyre"
+readme = "README.md"
+categories = []
+keywords = []
+
+[features]
+default = ["track-caller", "capture-spantrace"]
+capture-spantrace = ["tracing-error", "color-eyre/color-spantrace"]
+issue-url = ["color-eyre/issue-url"]
+track-caller = ["color-eyre/track-caller", "color-eyre/capture-spantrace"]
+
+[dependencies]
+anymap = "0.12.1"
+eyre = "0.6.1"
+color-eyre = "0.6.1"
+tracing-error = { version = "0.2.0", optional = true }
+backtrace = { version = "0.3.48", features = ["gimli-symbolize"] }
+
+[dev-dependencies]
+tracing-subscriber = { version = "0.3.0", features = ["env-filter"] }
+tracing = "0.1.13"
+pretty_assertions = "1.0.0"
+
+[profile.dev.package.backtrace]
+opt-level = 3
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
