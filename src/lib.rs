@@ -6,7 +6,7 @@
 //!
 //! Rest of the doc here is the same as in [`color-eyre`].
 //!
-//! # color-eyre
+//! # extension-eyre
 //!
 //! An error report handler for panics and the [`eyre`] crate for colorful, consistent, and well
 //! formatted error reports for all kinds of errors.
@@ -15,7 +15,7 @@
 //!
 //! `extension_eyre` helps you build error reports that look like this:
 //!
-//! <pre><span style="color: #06989A"><b>color-eyre</b></span> on <span style="color: #75507B"><b> hooked</b></span> <span style="color: #CC0000"><b>[$!] </b></span>is <span style="color: #FF8700"><b>📦 v0.5.0</b></span> via <span style="color: #CC0000"><b>🦀 v1.44.0</b></span>
+//! <pre><span style="color: #06989A"><b>extension-eyre</b></span> on <span style="color: #75507B"><b> hooked</b></span> <span style="color: #CC0000"><b>[$!] </b></span>is <span style="color: #FF8700"><b>📦 v0.5.0</b></span> via <span style="color: #CC0000"><b>🦀 v1.44.0</b></span>
 //! <span style="color: #4E9A06"><b>❯</b></span> cargo run --example custom_section
 //! <span style="color: #4E9A06"><b>    Finished</b></span> dev [unoptimized + debuginfo] target(s) in 0.04s
 //! <span style="color: #4E9A06"><b>     Running</b></span> `target/debug/examples/custom_section`
@@ -43,7 +43,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! color-eyre = "0.6"
+//! extension-eyre = "0.6"
 //! ```
 //!
 //! And install the panic and error report handlers:
@@ -66,12 +66,12 @@
 //!
 //! ```toml
 //! [dependencies]
-//! color-eyre = { version = "0.6", default-features = false }
+//! extension-eyre = { version = "0.6", default-features = false }
 //! ```
 //!
 //! ### Disabling SpanTrace capture by default
 //!
-//! color-eyre defaults to capturing span traces. This is because `SpanTrace`
+//! extension-eyre defaults to capturing span traces. This is because `SpanTrace`
 //! capture is significantly cheaper than `Backtrace` capture. However, like
 //! backtraces, span traces are most useful for debugging applications, and it's
 //! not uncommon to want to disable span trace capture by default to keep noise out
@@ -88,7 +88,7 @@
 //!
 //! ### Improving perf on debug builds
 //!
-//! In debug mode `color-eyre` behaves noticably worse than `eyre`. This is caused
+//! In debug mode `extension-eyre` behaves noticably worse than `eyre`. This is caused
 //! by the fact that `eyre` uses `std::backtrace::Backtrace` instead of
 //! `backtrace::Backtrace`. The std version of backtrace is precompiled with
 //! optimizations, this means that whether or not you're in debug mode doesn't
@@ -101,7 +101,7 @@
 //! overrides](https://doc.rust-lang.org/cargo/reference/profiles.html#overrides)
 //! can be used to mitigate this problem. By configuring your project to always
 //! build `backtrace` with optimizations you should get the same performance from
-//! `color-eyre` that you're used to with `eyre`. To do so add the following to
+//! `extension-eyre` that you're used to with `eyre`. To do so add the following to
 //! your Cargo.toml:
 //!
 //! ```toml
@@ -113,7 +113,7 @@
 //!
 //! ### Multiple report format verbosity levels
 //!
-//! `color-eyre` provides 3 different report formats for how it formats the captured `SpanTrace`
+//! `extension-eyre` provides 3 different report formats for how it formats the captured `SpanTrace`
 //! and `Backtrace`, minimal, short, and full. Take the below snippets of the output produced by [`examples/usage.rs`]:
 //!
 //! ---
@@ -121,7 +121,7 @@
 //! Running `cargo run --example usage` without `RUST_LIB_BACKTRACE` set will produce a minimal
 //! report like this:
 //!
-//! <pre><span style="color: #06989A"><b>color-eyre</b></span> on <span style="color: #75507B"><b> hooked</b></span> <span style="color: #CC0000"><b>[$!] </b></span>is <span style="color: #FF8700"><b>📦 v0.5.0</b></span> via <span style="color: #CC0000"><b>🦀 v1.44.0</b></span> took <span style="color: #C4A000"><b>2s</b></span>
+//! <pre><span style="color: #06989A"><b>extension-eyre</b></span> on <span style="color: #75507B"><b> hooked</b></span> <span style="color: #CC0000"><b>[$!] </b></span>is <span style="color: #FF8700"><b>📦 v0.5.0</b></span> via <span style="color: #CC0000"><b>🦀 v1.44.0</b></span> took <span style="color: #C4A000"><b>2s</b></span>
 //! <span style="color: #CC0000"><b>❯</b></span> cargo run --example usage
 //! <span style="color: #4E9A06"><b>    Finished</b></span> dev [unoptimized + debuginfo] target(s) in 0.04s
 //! <span style="color: #4E9A06"><b>     Running</b></span> `target/debug/examples/usage`
@@ -141,10 +141,10 @@
 //!
 //! <br>
 //!
-//! Running `RUST_LIB_BACKTRACE=1 cargo run --example usage` tells `color-eyre` to use the short
+//! Running `RUST_LIB_BACKTRACE=1 cargo run --example usage` tells `extension-eyre` to use the short
 //! format, which additionally capture a [`backtrace::Backtrace`]:
 //!
-//! <pre><span style="color: #06989A"><b>color-eyre</b></span> on <span style="color: #75507B"><b> hooked</b></span> <span style="color: #CC0000"><b>[$!] </b></span>is <span style="color: #FF8700"><b>📦 v0.5.0</b></span> via <span style="color: #CC0000"><b>🦀 v1.44.0</b></span>
+//! <pre><span style="color: #06989A"><b>extension-eyre</b></span> on <span style="color: #75507B"><b> hooked</b></span> <span style="color: #CC0000"><b>[$!] </b></span>is <span style="color: #FF8700"><b>📦 v0.5.0</b></span> via <span style="color: #CC0000"><b>🦀 v1.44.0</b></span>
 //! <span style="color: #CC0000"><b>❯</b></span> RUST_LIB_BACKTRACE=1 cargo run --example usage
 //! <span style="color: #4E9A06"><b>    Finished</b></span> dev [unoptimized + debuginfo] target(s) in 0.04s
 //! <span style="color: #4E9A06"><b>     Running</b></span> `target/debug/examples/usage`
@@ -163,22 +163,22 @@
 //!   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ BACKTRACE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //!   <span style="color: #34E2E2">                              ⋮ 5 frames hidden ⋮                               </span>
 //!    6: <span style="color: #F15D22">usage::read_file</span><span style="color: #88807C">::haee210cb22460af3</span>
-//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/color-eyre/examples/usage.rs</span>:<span style="color: #75507B">35</span>
+//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/extension-eyre/examples/usage.rs</span>:<span style="color: #75507B">35</span>
 //!    7: <span style="color: #F15D22">usage::read_config</span><span style="color: #88807C">::ha649ef4ec333524d</span>
-//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/color-eyre/examples/usage.rs</span>:<span style="color: #75507B">40</span>
+//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/extension-eyre/examples/usage.rs</span>:<span style="color: #75507B">40</span>
 //!    8: <span style="color: #F15D22">usage::main</span><span style="color: #88807C">::hbe443b50eac38236</span>
-//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/color-eyre/examples/usage.rs</span>:<span style="color: #75507B">11</span>
+//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/extension-eyre/examples/usage.rs</span>:<span style="color: #75507B">11</span>
 //!   <span style="color: #34E2E2">                              ⋮ 10 frames hidden ⋮                              </span>
 //!
 //! <span style="color: #34E2E2">Suggestion</span>: try using a file that exists next time</pre>
 //!
 //! <br>
 //!
-//! Finally, running `RUST_LIB_BACKTRACE=full cargo run --example usage` tells `color-eyre` to use
+//! Finally, running `RUST_LIB_BACKTRACE=full cargo run --example usage` tells `extension-eyre` to use
 //! the full format, which in addition to the above will attempt to include source lines where the
 //! error originated from, assuming it can find them on the disk.
 //!
-//! <pre><span style="color: #06989A"><b>color-eyre</b></span> on <span style="color: #75507B"><b> hooked</b></span> <span style="color: #CC0000"><b>[$!] </b></span>is <span style="color: #FF8700"><b>📦 v0.5.0</b></span> via <span style="color: #CC0000"><b>🦀 v1.44.0</b></span>
+//! <pre><span style="color: #06989A"><b>extension-eyre</b></span> on <span style="color: #75507B"><b> hooked</b></span> <span style="color: #CC0000"><b>[$!] </b></span>is <span style="color: #FF8700"><b>📦 v0.5.0</b></span> via <span style="color: #CC0000"><b>🦀 v1.44.0</b></span>
 //! <span style="color: #CC0000"><b>❯</b></span> RUST_LIB_BACKTRACE=full cargo run --example usage
 //! <span style="color: #4E9A06"><b>    Finished</b></span> dev [unoptimized + debuginfo] target(s) in 0.05s
 //! <span style="color: #4E9A06"><b>     Running</b></span> `target/debug/examples/usage`
@@ -207,21 +207,21 @@
 //!   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ BACKTRACE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //!   <span style="color: #34E2E2">                              ⋮ 5 frames hidden ⋮                               </span>
 //!    6: <span style="color: #F15D22">usage::read_file</span><span style="color: #88807C">::haee210cb22460af3</span>
-//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/color-eyre/examples/usage.rs</span>:<span style="color: #75507B">35</span>
+//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/extension-eyre/examples/usage.rs</span>:<span style="color: #75507B">35</span>
 //!         33 │ fn read_file(path: &amp;str) -&gt; Result&lt;(), Report&gt; {
 //!         34 │     info!(&quot;Reading file&quot;);
 //!   <span style="color: #D3D7CF"><b>      35 &gt;     Ok(std::fs::read_to_string(path).map(drop)?)</b></span>
 //!         36 │ }
 //!         37 │
 //!    7: <span style="color: #F15D22">usage::read_config</span><span style="color: #88807C">::ha649ef4ec333524d</span>
-//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/color-eyre/examples/usage.rs</span>:<span style="color: #75507B">40</span>
+//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/extension-eyre/examples/usage.rs</span>:<span style="color: #75507B">40</span>
 //!         38 │ #[instrument]
 //!         39 │ fn read_config() -&gt; Result&lt;(), Report&gt; {
 //!   <span style="color: #D3D7CF"><b>      40 &gt;     read_file(&quot;fake_file&quot;)</b></span>
 //!         41 │         .wrap_err(&quot;Unable to read config&quot;)
 //!         42 │         .suggestion(&quot;try using a file that exists next time&quot;)
 //!    8: <span style="color: #F15D22">usage::main</span><span style="color: #88807C">::hbe443b50eac38236</span>
-//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/color-eyre/examples/usage.rs</span>:<span style="color: #75507B">11</span>
+//!       at <span style="color: #75507B">/home/jlusby/git/yaahc/extension-eyre/examples/usage.rs</span>:<span style="color: #75507B">11</span>
 //!          9 │     extension_eyre::install()?;
 //!         10 │
 //!   <span style="color: #D3D7CF"><b>      11 &gt;     Ok(read_config()?)</b></span>
@@ -276,7 +276,7 @@
 //! Running `cargo run --example custom_section` shows us how these sections are
 //! included in the output:
 //!
-//! <pre><span style="color: #06989A"><b>color-eyre</b></span> on <span style="color: #75507B"><b> hooked</b></span> <span style="color: #CC0000"><b>[$!] </b></span>is <span style="color: #FF8700"><b>📦 v0.5.0</b></span> via <span style="color: #CC0000"><b>🦀 v1.44.0</b></span> took <span style="color: #C4A000"><b>2s</b></span>
+//! <pre><span style="color: #06989A"><b>extension-eyre</b></span> on <span style="color: #75507B"><b> hooked</b></span> <span style="color: #CC0000"><b>[$!] </b></span>is <span style="color: #FF8700"><b>📦 v0.5.0</b></span> via <span style="color: #CC0000"><b>🦀 v1.44.0</b></span> took <span style="color: #C4A000"><b>2s</b></span>
 //! <span style="color: #CC0000"><b>❯</b></span> cargo run --example custom_section
 //! <span style="color: #4E9A06"><b>    Finished</b></span> dev [unoptimized + debuginfo] target(s) in 0.04s
 //! <span style="color: #4E9A06"><b>     Running</b></span> `target/debug/examples/custom_section`
@@ -311,7 +311,7 @@
 //! done](https://github.com/rust-lang/rfcs/pull/2895) to improve this.
 //!
 //! For now however one way to work around this is to compose errors outside the
-//! error trait. `color-eyre` supports such composition in its error reports via
+//! error trait. `extension-eyre` supports such composition in its error reports via
 //! the `Section` trait.
 //!
 //! For an example of how to aggregate errors check out [`examples/multiple_errors.rs`].
@@ -319,11 +319,11 @@
 //! ### Custom configuration for `color-backtrace` for setting custom filters and more
 //!
 //! The pretty printing for backtraces and span traces isn't actually provided by
-//! `color-eyre`, but instead comes from its dependencies [`color-backtrace`] and
+//! `extension-eyre`, but instead comes from its dependencies [`color-backtrace`] and
 //! [`color-spantrace`]. `color-backtrace` in particular has many more features
-//! than are exported by `color-eyre`, such as customized color schemes, panic
+//! than are exported by `extension-eyre`, such as customized color schemes, panic
 //! hooks, and custom frame filters. The custom frame filters are particularly
-//! useful when combined with `color-eyre`, so to enable their usage we provide
+//! useful when combined with `extension-eyre`, so to enable their usage we provide
 //! the `install` fn for setting up a custom `BacktracePrinter` with custom
 //! filters installed.
 //!
