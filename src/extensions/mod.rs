@@ -5,7 +5,6 @@
 //! [`Extension`] trait allows accessing custom data from error reports.
 
 mod map;
-use std::any::Any;
 
 use color_eyre::Report;
 pub use map::Extensions;
@@ -488,7 +487,7 @@ impl ExtensionExt for Report {
 
 impl<T, E> ExtensionExt for Result<T, E>
 where
-    E: 'static + Any + Into<Report>,
+    E: Into<Report>,
 {
     type Return = Result<T, Report>;
 
