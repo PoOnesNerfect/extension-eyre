@@ -1,6 +1,6 @@
 //! # About this crate
 //!
-//! Forked version of [`color-eyre`] crate that introduces `Extensions`.
+//! Re-export of [`color-eyre`] crate that introduces `Extensions`.
 //!
 //! See [extensions](extensions) module documentation to learn how to use [`Extension`](extensions::Extension) and [`ExtensionExt`](extensions::ExtensionExt), .
 //!

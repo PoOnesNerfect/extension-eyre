@@ -50,9 +50,27 @@ The extensions implementation is a copy of [http crate](https://crates.io/crates
 you can access this data with trait `Extension` with method `report.extension_ref::<T>()`.
 
 ```rust
-use extension_eyre::{eyre::eyre, SectionExt, Section, eyre::Report};
+use extension_eyre::{eyre::eyre, ExtensionExt, Extension, eyre::Report};
 use std::process::Command;
 use tracing::instrument;
+
+pub struct Retry;
+
+#[instrument]
+fn app(path: &str) -> Result<String, Report> {
+    if let Err(err) = read_file("fake_file") {
+        if let Some(Retry) = err.extension_ref() {
+            // ...handle retry case
+        }
+    }
+
+    Ok(Default::default())
+}
+
+#[instrument]
+fn read_file(path: &str) -> Result<String, Report> {
+    Command::new("cat").arg(path).output2()
+}
 
 trait Output {
     fn output2(&mut self) -> Result<String, Report>;
@@ -66,10 +84,7 @@ impl Output for Command {
         let stdout = String::from_utf8_lossy(&output.stdout);
 
         if !output.status.success() {
-            let stderr = String::from_utf8_lossy(&output.stderr);
-            Err(eyre!("cmd exited with non-zero status code"))
-                .with_section(move || stdout.trim().to_string().header("Stdout:"))
-                .with_section(move || stderr.trim().to_string().header("Stderr:"))
+            Err(eyre!("cmd exited with non-zero status code")).extension(Retry)
         } else {
             Ok(stdout.into())
         }
